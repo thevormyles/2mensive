@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>evren and myles second mensive</title>
+<style>
+  :root{
+    --bg1: #f7fbff;
+    --accent: #1e90ff;
+    --soft: #eaf6ff;
+    --muted: #6e8298;
+  }
+  * {box-sizing: border-box; margin: 0; padding: 0;}
+  html,body {height:100%; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; background: linear-gradient(180deg,var(--bg1),#fff); color:#072034;}
+  .app {min-height:100vh; display:flex; align-items:center; justify-content:center; padding:28px; position:relative; overflow:hidden;}
+  .card {width:420px; max-width:96vw; border-radius:18px; box-shadow:0 18px 40px rgba(10,30,60,0.08); background: rgba(255,255,255,0.9); padding:18px; position:relative; z-index:6;}
+  .bg {position:fixed; inset:0; pointer-events:none; z-index:1;}
+  .bg .heart {position:absolute; font-size:18px; opacity:0.9; animation:floatUp linear infinite; transform-origin:center;}
+  @keyframes floatUp {0%{transform: translateY(100vh) scale(.7); opacity:0}40%{opacity:1}100%{transform: translateY(-20vh) scale(1.2); opacity:0}}
+  .slide {display:none}
+  .slide.active {display:block}
+  .center {display:flex; flex-direction:column; align-items:center; gap:12px;}
+  .round {width:170px; height:170px; border-radius:50%; overflow:hidden; border:8px solid rgba(30,144,255,0.12); box-shadow:0 8px 26px rgba(30,40,60,0.06);}
+  .round img{width:100%;height:100%;object-fit:cover;}
+  .pin-input {width:70%; padding:10px 12px; text-align:center; border-radius:10px; border:1px dashed var(--muted); font-size:16px;}
+  .btn {padding:10px 14px; border-radius:10px; border:none; cursor:pointer; background:linear-gradient(90deg,var(--accent),#67c0ff); color:white; box-shadow:0 8px 18px rgba(30,90,180,0.12);}
+  .btn.ghost {background:transparent; color:var(--accent); border:1px solid rgba(30,144,255,0.12)}
+  .chat-wrap {display:flex; flex-direction:column; gap:8px;}
+  .chat-top {display:flex; align-items:center; gap:10px; padding:8px; background:linear-gradient(90deg,#fff,#f3fbff); border-radius:12px;}
+  .chat-top .avatar{width:42px;height:42px;border-radius:50%;overflow:hidden;border:2px solid rgba(30,144,255,0.12)}
+  .messages {height:420px; overflow:auto; display:flex; flex-direction:column; gap:10px; padding:12px; background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(245,251,255,0.95)); border-radius:12px; border:1px solid rgba(16,32,47,0.02)}
+  .bubble {max-width:78%; padding:10px 12px; border-radius:14px; font-size:14px; line-height:1.35}
+  .bubble.user {align-self:flex-end; background:linear-gradient(180deg,#dff2ff,#cfeeff); color:#052238; border-bottom-right-radius:5px}
+  .bubble.bot {align-self:flex-start; background:#fbfeff; color:#0f2736; border:1px solid rgba(16,32,47,0.04); border-bottom-left-radius:5px}
+  .compose {display:flex; gap:8px; margin-top:8px; align-items:center;}
+  .compose input {flex:1; padding:10px 12px; border-radius:10px; border:1px solid rgba(16,32,47,0.06)}
+  .overlay {position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; background:linear-gradient(180deg,rgba(255,255,255,0.96),rgba(255,255,255,0.9)); border-radius:18px}
+  .title-big {text-align:center; font-size:20px; color:var(--accent); margin-bottom:10px;}
+  .grid {display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:8px}
+  .polaroid {background:white; padding:8px; border-radius:10px; box-shadow:0 10px 26px rgba(16,32,47,0.08); display:flex; flex-direction:column; align-items:center; cursor:pointer;}
+  .polaroid img{width:86%; height:86px; object-fit:cover; border-radius:6px}
+  .modal {position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:linear-gradient(180deg,rgba(0,0,0,0.34),rgba(0,0,0,0.5)); z-index:60}
+  .modal .card {width:92%; max-width:560px; background:white; padding:18px; border-radius:12px}
+  .letter {white-space:pre-wrap; font-size:15px; line-height:1.5; color:#10202f}
+  @keyframes dot{0%{opacity:.2}50%{opacity:1}100%{opacity:.2}}
+</style>
+</head>
+<body>
+
+<div class="bg" id="bgLayer"></div>
+<div class="app">
+  <div class="card" id="cardRoot">
+
+    <!-- SLIDE 1 -->
+    <section class="slide active" id="slide1">
+      <div class="center">
+        <div class="round"><img src="img/seraph of the end.jpg" alt="cover"></div>
+        <h3 style="color:var(--accent)">hi, baby!! happy our 2nd month </h3>
+        <p style="color:var(--muted);font-size:13px">Masukkan PIN untuk masuk</p>
+        <input id="pinMain" class="pin-input" placeholder="Enter PIN (ddmmyy",)" maxlength="10">
+        <button id="unlockBtn" class="btn">Unlock</button>
+      </div>
+    </section>
+
+    <!-- SLIDE 2 -->
+    <section class="slide" id="slide2" style="position:relative">
+      <div class="chat-wrap">
+        <div class="chat-top">
+          <div class="avatar"><img src="img/Gambar WhatsApp 2025-10-21 pukul 15.47.48_1ead2eed.jpg" style="width:100%;height:100%;object-fit:cover"></div>
+          <div style="flex:1"><div style="font-weight:600">myles.</div><small style="color:var(--muted)">online, tapi malas bales.</small></div>
+        </div>
+
+        <div class="messages" id="messages"></div>
+
+        <div class="compose">
+          <input id="composer" placeholder="Type a message..." disabled>
+          <button id="sendBtn" class="btn">Send</button>
+        </div>
+
+        <div class="overlay" id="overlayStart">
+          <h3 style="color:var(--accent)">where everything began</h3>
+          <small style="color:var(--muted)">tap to replay our first convo</small>
+          <div><button id="startChatBtn" class="btn">Start</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3 -->
+    <section class="slide" id="slide3">
+      <div>
+        <div class="title-big">Happy Mensive, i still fall from you, even in the smallest moments.💙</div>
+        <div class="grid" id="polaroidGrid">
+          <div class="polaroid" data-id="1" data-pin="2606"><img src="img/raveeeee.jpg"><small>our little ravee nights</small></div>
+          <div class="polaroid" data-id="2" data-pin="2206"><img src="img/gumochann.jpg"><small>9000 bbc and beyond</small></div>
+          <div class="polaroid" data-id="3" data-pin="1007"><img src="img/yoshiden.jpg"><small> when i realized i like you</small></div>
+          <div class="polaroid" data-id="4" data-pin="2707"><img src="img/ottoge.jpg"><small>if i could pause time</small></div>
+          <div class="polaroid" data-id="5" data-pin="2110"><img src="img/yumika.jpg"><small>thank you, always</small></div>
+          <div class="polaroid" data-id="6" data-pin="2210"><img src="img/mikayuu.jpg"><small>still, its you where i belongg to</small></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- PIN modal -->
+<div class="modal" id="modalPin">
+  <div class="card">
+    <h3 id="modalTitle">Enter PIN</h3>
+    <input id="modalPinInput" placeholder="PIN" style="padding:10px;border-radius:8px;border:1px solid #e6eefb;width:40%;">
+    <div style="margin-top:10px;display:flex;justify-content:flex-end;gap:8px">
+      <button id="modalOpenBtn" class="btn">Open</button>
+      <button id="modalCloseBtn" class="btn ghost">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Letter modal -->
+<div class="modal" id="modalLetter">
+  <div class="card">
+    <h3 id="letterTitle">Letter</h3>
+    <div class="letter" id="letterBody"></div>
+    <div style="margin-top:10px;display:flex;justify-content:flex-end">
+      <button id="closeLetterBtn" class="btn ghost">Back</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Hearts BG */
+const bg = document.getElementById('bgLayer');
+for(let i=0;i<18;i++){const e=document.createElement('div');e.className='heart';e.style.left=Math.random()*100+'vw';e.style.top=(80+Math.random()*20)+'vh';e.style.fontSize=(12+Math.random()*28)+'px';e.style.animationDuration=(6+Math.random()*6)+'s';e.textContent='💙';bg.appendChild(e);}
+
+/* Slide control */
+function showSlide(id){document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+
+/* Slide1: PIN */
+const unlockBtn=document.getElementById('unlockBtn'),pinMain=document.getElementById('pinMain');
+unlockBtn.onclick=()=>{if(pinMain.value.trim()==='220825'){showSlide('slide2');setTimeout(()=>overlay.style.display='flex',400);}else{pinMain.animate([{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:360});}};
+pinMain.onkeydown=e=>{if(e.key==='Enter')unlockBtn.click();};
+
+/* Slide2: Chat manual */
+const overlay=document.getElementById('overlayStart'),startChatBtn=document.getElementById('startChatBtn');
+const composer=document.getElementById('composer'),sendBtn=document.getElementById('sendBtn'),messages=document.getElementById('messages');
+startChatBtn.onclick=()=>{overlay.style.display='none';composer.disabled=false;composer.focus();};
+
+let convo=[
+  {u:'Tanpa dihina pun dirinya sudah hina🤍',b:'hi makasih..'},
+  {u:'Gapapa, sama sama hina nih. Bekawan gak.',b:'bekawan ga ya'},
+  {u:'Myles makan bakwan, yuk berkawan',b:'cakepp, yaudah deh, yuk.'},
+  {u:'Mana bakwan nya, Perlu kenalan dong, Males banget.',b:'mungkin, sama, lu duluan lah'},
+  {u:'Lah, Gua juga males',b:'sama, gamau, gua anti'},
+  {u:'Lalu? Gua juga males',b:'lu duluan, tanding yuk.'},
+  {u:'Gak. Gua males, Malah diajak tanding, Tau males gak, Lazy',b:'oh iya ya, terus gimana, gua gamau duluan, jngn berharap sy ngalah, sy gasuka'},
+  {u:'Lu kaya dosen',b:'maaf'},
+  {u:'Yaudah gua ngalah',b:'yes akhirny, cepet'},
+  {u:'Males',b:'?????'},
+  {u:'Sesuai sama nama lu, Myles,Males, My les,Les ku, Private les,\\n\\nGua evren harlan, feel free to called me with evren or ren atau apaajajugagapapa',b:'jangan hina bisa??'},
+  {u:'Lu udah hina',b:'Gua thevor myles, feel free to called me with myles or evo atau apaajajugagapapa'}
+];
+let i=0;
+function append(who,txt){const b=document.createElement('div');b.className='bubble '+who;b.textContent=txt;messages.appendChild(b);messages.scrollTop=messages.scrollHeight;}
+sendBtn.onclick=()=>{
+  if(i>=convo.length)return;
+  const {u,b}=convo[i++];
+  composer.value='';
+  append('user',u);
+  setTimeout(()=>append('bot',b),600);
+  if(i>=convo.length){setTimeout(()=>{
+    const next=document.createElement('button');next.className='btn';next.textContent='Next ➜';next.onclick=()=>showSlide('slide3');
+    const wrap=document.createElement('div');wrap.style.display='flex';wrap.style.justifyContent='center';wrap.appendChild(next);
+    messages.appendChild(wrap);messages.scrollTop=messages.scrollHeight;
+  },1200);}
+};
+composer.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();sendBtn.click();}};
+
+/* Slide3: Polaroid */
+const modalPin=document.getElementById('modalPin'),modalPinInput=document.getElementById('modalPinInput');
+const modalOpenBtn=document.getElementById('modalOpenBtn'),modalCloseBtn=document.getElementById('modalCloseBtn');
+const modalLetter=document.getElementById('modalLetter'),letterBody=document.getElementById('letterBody'),closeLetterBtn=document.getElementById('closeLetterBtn');
+const letterTexts={
+ '1':`Dear you,evren harlan, my fav person\n\n
+
+i still remember our first rave, nonton bobo sama tiga kurcaci ngeselin itu 😭
+so random but so us.
+who would’ve thought that stupid app bakal jadi tempat kita ngabisin waktu segitu banyak?
+
+at first it was just for fun.
+kayak, “yaudah rave aja biar gak bosen.”
+but somehow it turned into something i actually wait for every day.
+those tiny “ily” messages, the songs, the silence  everything just hit different.
+
+sometimes we’d both be busy, kadang salah satu ketiduran, tapi tetep aja rave jalan terus.
+even when we didn’t talk much, it still felt close.
+like… that quiet comfort kind of thing.
+
+and honestly, my favorite part?
+when i realized we actually got the same music taste.
+that moment felt so small but so nice.
+like, oh shit, this person gets me.
+
+it’s crazy to think that without that app, maybe we wouldn’t be this close.
+somehow rave became our little space, our thing, and i’m glad it did.
+
+so yeah, thank you for every rave night, every sleepy laugh, every song we shared.
+i love this version of us, the one that just stayed.`,
+ '2':`long first impresion\n honestly, waktu pertama kali kenal kamu, aku gak nyangka kita bakal sedeket ini. i thought it would just be another random chat, yang nantinya ilang gitu aja kayak biasa. but somehow, you stayed. kamu punya cara sendiri buat bikin semua obrolan terasa gampang dan ringan. even when i was being dry, kamu masih bisa nemuin hal buat dibahas kayak selalu ada topik baru yang muncul tiba-tiba. i still remember waktu kamu kirim abjad satu-satu trus ngajak tebak-tebakan :( it was so random, but i actually laughed. hal sesederhana itu tapi masih aku inget sampe sekarang.
+
+terus entah gimana, belum seminggu, tapi bbc udah 9k :) aku cuma bisa mikir, how did we even talk that much? tapi ya, aku gak pernah ngerasa capek. it just felt natural. kadang kita ngobrol hal receh banget, terus tiba-tiba nyambung ke deep talk tengah malam. and i think that’s when it started to feel different  kayak bukan sekadar chat biasa lagi. aku mulai nungguin kamu, mulai senyum sendiri pas liat notif kamu muncul. it wasn’t anything big, just those little moments that slowly started to mean something.
+
+kamu tuh lucu, kadang nyebelin, tapi selalu hangat. you make things feel easy, like i could talk about anything without feeling weird. dan dari semua hal kecil itu, aku mulai sadar kalau aku nyaman  bukan yang lebay, cuma… nyaman aja. calm but warm.
+
+kadang aku mikir, lucu juga ya, dari obrolan random yang awalnya cuma iseng, bisa jadi sesuatu yang berarti segini. i didn’t plan any of this, but i’m glad it happened. and i’m glad it’s you.`,
+ '3':`when i realized i like you.\n
+
+i started noticing it slowly, pas aku mikir kenapa kamu gak bales chat aku. “lagi apa ya dia? kok on tapi gak bales?” my brain langsung bikin skenario sendiri, “ah dia sama orang lain, padahal harusnya sama aku.” then all these small things started piling up. i’d hear a song and think, “this song is so you,” or see a cute couple, a chain, or something that looks sweet, and suddenly my mind wanders to you. when someone asks, “eh evren biasanya kemana sama dia?” i immediately look for you in the crowd, or check who you’re texting. i start overthinking tiny stuff, stuff i never cared about before. sometimes i don’t even know how to reply to you when you text first, sometimes i just smile by myself remembering random little moments, sometimes i reread our chats and feel this warmth for no reason at all. even the simplest things, like a song we both like or a dumb meme, suddenly remind me of you. slowly, pelan-pelan, i realized.. i like you. not in a dramatic way, it wasn’t sudden, just all these tiny things stacking up until i finally noticed you matter to me more than i thought.`,
+ '4':`If I could pause time. \n if i could pause time, aku pengenn berhenti pas lagi sama kamu. pas kita lagi ngobrol random, ketawa sama hal lucuu, atau cuma diem bareng tapi tetep ngerasa deket. momen kayak gitu yang bikin aku pengen waktu berhenti sebentar. kadang aku mikir, kalo bisa, aku mau stuck di detik itu, cuma ada aku sama kamu, gak usah buru-buru, gak usah mikirin apa-apa. aku pengin inget cara kamu ngomong, cara kamu senyum, cara kamu bikin semua hal terasa ringan. gak perlu hal besar atau spesial, cuma... bareng kamu rasanya udah kaya ga butuh apa apa lagi.`,
+ '5':`thank you always. \n evren harlan, aku pengin bilang sorry dulu. sorry kalo kadang aku ribet, overthinking, atau bikin kamu ngerasa gak nyaman tanpa sengaja. i know aku gak selalu perfect, tapi aku selalu pengin yang terbaik buat kita, kadang aku mikir terlalu banyak, kadang aku takut salah ngomong, tapi kamu selalu sabar dan ngerti aku tanpa harus aku jelasin panjang lebar. itu bikin aku ngerasa dihargai dan aman banget. aku juga pengin bilang thank you. thank you karena kamu selalu ada, karena kamu ngerti aku meskipun aku gak ngomong banyak. thanks for all the little things you do, dari yang lucu, random, sampai yang serius  semuanya bikin aku ngerasa nyaman, dihargai, dan selalu pengin deket sama kamu. thanks karena kamu bikin hari-hari aku lebih ringan, lebih seru, dan lebih berarti. kadang cuma hal kecil kayak chat random, laugh, atau nge-rave bareng, tapi itu semua penting banget buat aku.
+
+dan aku pengin bilang aku bersyukur. grateful that kita bisa ketemu, bisa deket, punya momen-momen kecil yang cuma kita yang ngerti. aku bersyukur karena kamu sabar sama aku, tetep stay walaupun aku kadang bingung sendiri, kadang rewel, kadang terlalu banyak mikir. every laugh, every chat, every little rave kita — semuanya bikin aku ngerasa beruntung banget punya kamu. kadang aku cuma pengin pause sebentar, buat nikmatin kita tanpa mikirin apa-apa, tapi realitanya aku selalu seneng tiap detik kita bareng, walaupun waktu jalan terus.
+
+aku cuma pengin kamu tau, aku sayang kamu, aku appreciate kamu, dan aku pengin kita terus kayak gini. even di hari biasa, even pas semuanya ribet, aku selalu bersyukur punya kamu di sisi aku. kamu tuh salah satu hal terbaik yang pernah terjadi sama aku, dan aku pengin kita terus ngerasa nyaman, happy, dan dekat kayak sekarang..`,
+ '6':`you are where i belong to.\nevren harlan, my favorite person.
+
+kadang aku mikir, lucu aja gimana semuanya mulai. dari chat random, tebak-tebakan gak jelas, rave tengah malam, sampe hal kecil yang dulu keliatannya sepele tapi ternyata berarti banget sekarang. it’s kinda crazy, ya? how something that simple turns into something that actually matters. dan bahkan setelah semua waktu ini, setelah semua naik-turunnya, aku tetep baliknya ke kamu. still, it’s you.
+
+ada rasa tenang tiap aku sama kamu. bukan yang rame atau drama, tapi yang pelan aja, tapi nyata. kamu tuh bukan cuma orang yang aku suka, tapi orang yang bikin aku ngerasa... “oh, ternyata gini rasanya aman.” kayak di mana pun aku berada, ujung-ujungnya ya balik lagi ke kamu. kamu tuh rasanya kayak rumah  the place that feels right, the one i belong to without even trying.
+
+aku suka cara kita gak pernah maksa apa pun. things just flow. kita bisa ngobrol panjang, atau diem aja, tapi tetep kerasa cukup. gak awkward, gak aneh, cuma… pas aja. kamu tuh orang yang bikin sepi jadi gak sesepi itu.
+
+kadang aku suka kepikiran, “kalau waktu bisa berhenti,” mungkin aku bakal pilih berhenti di momen-momen kayak waktu kamu ketawa, atau pas semuanya lagi tenang banget, yang rasanya kayak dunia kecil tapi pas. i’d stay there. i’d stay with you.
+
+thank you, ya. buat semua hal kecil, buat tiap obrolan random, tiap lagu yang kita dengerin bareng, tiap malam yang ternyata berarti lebih dari yang kelihatan. aku emang gak selalu ngomong, tapi aku beneran bersyukur punya kamu.
+
+kalau aku boleh minta sesuatu, maybe i just wish we’ll always find our way back to each other. even pas sibuk, even pas jauh, even pas dunia rasanya muter terlalu cepat. semoga kita tetep ketemu di tengahnya, masih bisa saling nemuin di waktu yang pas.
+
+and maybe nanti, kalau semuanya udah berubah, dan dunia udah gak sama lagi, aku cuma mau satu hal yang tetap sama  it’s still you. where i belong. 💙💙`
+};
+const pins={'1':'2606','2':'2206','3':'1007','4':'2707','5':'2110','6':'2210'};
+let act=null;
+document.querySelectorAll('.polaroid').forEach(p=>{
+  p.onclick=()=>{act=p.dataset.id;document.getElementById('modalTitle').textContent=`Open Polaroid ${act}`;modalPinInput.value='';modalPin.style.display='flex';setTimeout(()=>modalPinInput.focus(),100);}
+});
+modalCloseBtn.onclick=()=>modalPin.style.display='none';
+modalOpenBtn.onclick=()=>{
+  if(modalPinInput.value.trim()===pins[act]){modalPin.style.display='none';openLetter(act);}
+  else{modalPinInput.animate([{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:360});}
+};
+function openLetter(id){letterBody.textContent='';let t=letterTexts[id],i=0;modalLetter.style.display='flex';const int=setInterval(()=>{letterBody.textContent+=t.charAt(i++);if(i>=t.length)clearInterval(int);},30);}
+closeLetterBtn.onclick=()=>modalLetter.style.display='none';
+</script>
+</body>
+</html>
